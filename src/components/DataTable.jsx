@@ -25,7 +25,7 @@ export default class DataTable extends React.Component {
   }
 
   render() {
-    const { idName, columns, isLoading, data } = this.props;
+    const { idName, columns, data } = this.props;
 
     return (
       <table className="table table-dark">
