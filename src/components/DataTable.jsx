@@ -1,47 +1,56 @@
 import React from "react";
 
+const DataTableCell = ({ value }) => <td>{value}</td>;
+
+const DataTableRow = ({ idName, columns, record }) => (
+  <tr>
+    {columns.map(column => (
+      <DataTableCell
+        key={"cell-" + column.name + "-" + record[idName]}
+        value={record[column.name]}
+      />
+    ))}
+  </tr>
+);
+
 export default class DataTable extends React.Component {
   constructor(props) {
     super(props);
 
-    const defaultColumn = {
-      name: null,
-      label: null
-    };
-
-    this.state = {
-      columns: [defaultColumn] || props.columns,
-      sorters: [],
-      data: []
-    };
-
-    this.onSortClick = this.onSortClick.bind(this);
+    this.sorters = [];
   }
 
-  onSortClick(e) {
-    console.log(e);
-    // add to sorters thingy weee
+  onSortByColumn(e) {
+    console.log(e.target.dataset.key);
   }
 
   render() {
-    <table className="table">
-      <tr className="thead-dark">
-        {this.state.columns.length > 1 &&
-          this.state.columns.map(column => (
-            <th scope="col" key={column.name}>
-              <span
-                data-name={column.name}
-                onClick={this.onSortClick(column.name)}
-              >
-                {column.label}
-              </span>
-            </th>
+    const { idName, columns, isLoading, data } = this.props;
+
+    return (
+      <table className="table table-dark">
+        <thead className="thead-dark">
+          <tr>
+            {columns.map(column => (
+              <th scope="col" key={column.name}>
+                <span data-key={column.name} onClick={this.onSortByColumn}>
+                  {column.label}
+                </span>
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {data.map(record => (
+            <DataTableRow
+              key={"row-" + record[idName]}
+              idName={idName}
+              columns={columns}
+              record={record}
+            />
           ))}
-      </tr>
-      {this.state.data &&
-        this.state.data.map(record => {
-          <tr>{Object.keys(record).map((key, value) => <td>{value}</td>)}</tr>;
-        })}
-    </table>;
+        </tbody>
+      </table>
+    );
   }
 }
