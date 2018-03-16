@@ -80,7 +80,7 @@ class App extends React.Component {
           </form>
         </div>
 
-        <DataTable
+        <DataTableNew
           columns={[
             { name: "author", label: "Author" },
             { name: "title", label: "Title" }
