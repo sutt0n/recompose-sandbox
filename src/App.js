@@ -89,6 +89,7 @@ class App extends React.Component {
           page={this.state.page}
           isLoading={this.state.isLoading}
           onChangePage={this.onChangePage}
+          totalPages={this.state.totalPages}
         />
       </div>
     );
