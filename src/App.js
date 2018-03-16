@@ -1,6 +1,7 @@
 import React from "react";
 import { compose } from "recompose";
 
+import DataTable from "./components/DataTable.jsx";
 import withLoading from "./components/higher-order/withLoading";
 import withPagination from "./components/higher-order/withPagination";
 
@@ -90,53 +91,9 @@ class App extends React.Component {
           isLoading={this.state.isLoading}
           onChangePage={this.onChangePage}
           totalPages={this.state.totalPages}
+          idName="objectID"
         />
       </div>
-    );
-  }
-}
-
-const DataTableCell = ({ value }) => <td>{value}</td>;
-
-const DataTableRow = ({ columns, record }) => (
-  <tr>
-    {columns.map(column => <DataTableCell value={record[column.name]} />)}
-  </tr>
-);
-
-class DataTable extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.sorters = [];
-  }
-
-  onSortByColumn(e) {
-    console.log(e.target.dataset.key);
-  }
-
-  render() {
-    const { columns, isLoading, data } = this.props;
-
-    return (
-      <table className="table table-dark">
-        <thead className="thead-dark">
-          <tr>
-            {columns.map(column => (
-              <th scope="col" key={column.name}>
-                <span data-key={column.name} onClick={this.onSortByColumn}>
-                  {column.label}
-                </span>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {data.map(record => (
-            <DataTableRow columns={columns} record={record} />
-          ))}
-        </tbody>
-      </table>
     );
   }
 }
