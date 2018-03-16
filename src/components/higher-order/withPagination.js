@@ -18,8 +18,6 @@ const withPagination = BaseComponent => props => {
     );
   }
 
-  console.log(pageBtns);
-
   return (
     <div>
       <BaseComponent {...props} />
